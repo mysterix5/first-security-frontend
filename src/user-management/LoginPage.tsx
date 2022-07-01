@@ -1,26 +1,30 @@
-import { AccountCircle, Key } from "@mui/icons-material";
+import {AccountCircle, Key} from "@mui/icons-material";
 import {Box, Button, Grid, InputAdornment, Link, TextField, Typography} from "@mui/material";
-import {FormEvent, useState } from "react";
+import {FormEvent, useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
-import { sendLogin } from "../services/apiServices";
+import {sendLogin} from "../services/apiServices";
+import {useAuth} from "./AuthProvider";
 
 export default function LoginPage() {
 
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
+    const {token, login} = useAuth();
 
     const nav = useNavigate();
+
+    useEffect( () => {
+            if (token) nav("/")
+        }
+    , [token, nav])
+
+    const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
 
 
     const handleSubmit = (event: FormEvent) => {
         event.preventDefault();
         sendLogin({username, password})
-            .then(r => {
-                console.log(r);
-                localStorage.setItem("jwt", r.token);
-                return r;
-            })
-            .then(()=>nav("/userpage"));
+            .then(r => login(r.token) )
+            .then(() => nav("/userpage"));
     }
 
     return (
@@ -28,11 +32,10 @@ export default function LoginPage() {
             <Typography variant={"h3"} gutterBottom>
                 Login page
             </Typography>
-            <Box component={"form"} onSubmit={handleSubmit} sx={{mt:7}}>
+            <Box component={"form"} onSubmit={handleSubmit} sx={{mt: 7}}>
                 <Grid container alignItems="center" spacing={2}>
                     <Grid item xs={12} sm={4}>
                         <TextField
-                            id="outlined-basic"
                             label="Username"
                             variant="outlined"
                             size="small"
@@ -48,10 +51,10 @@ export default function LoginPage() {
                     </Grid>
                     <Grid item xs={12} sm={4}>
                         <TextField
-                            id="outlined-basic"
                             label="Password"
                             variant="outlined"
                             size="small"
+                            type={"password"}
                             InputProps={{
                                 startAdornment: (
                                     <InputAdornment position="start">
@@ -75,16 +78,13 @@ export default function LoginPage() {
                 </Grid>
             </Box>
             <Link href={"https://github.com/login/oauth/authorize?client_id=36f80ad5d6db74b4b0d3"}>
-            <Box component="img"
-                 alt="Github Logo"
-                 src="GitHub-Mark-64px.png"
-                 sx={{m:3}}
-            />
+                <Box component="img"
+                     alt="Github Logo"
+                     src="GitHub-Mark-64px.png"
+                     sx={{m: 3}}
+                />
             </Link>
             <div/>
-            <Button variant={"contained"} onClick={() => nav("/")}>
-                Back to main page
-            </Button>
         </>
     )
 }

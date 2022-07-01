@@ -1,13 +1,11 @@
-import {Button, Typography } from "@mui/material";
+import {Typography } from "@mui/material";
 import {useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { getUser } from "../services/apiServices";
 
 
 export default function UserPage(){
     const [username, setUsername] = useState('')
-    const nav = useNavigate();
-    
+
     useEffect(()=>{
             getUser()
                 .then(user => setUsername(user))
@@ -15,7 +13,7 @@ export default function UserPage(){
 
     return (
         <>
-            <Typography variant={"h1"} gutterBottom>
+            <Typography variant={"h3"} gutterBottom>
                 User page
             </Typography>
             {
@@ -27,18 +25,6 @@ export default function UserPage(){
                     <Typography>
                         You are not logged in
                     </Typography>
-            }
-            <Button variant={"contained"} onClick={() => nav("/")}>
-                Back to main page
-            </Button>
-            {
-                localStorage.getItem("jwt") &&
-                <Button variant={"contained"} onClick={() => {
-                    localStorage.clear();
-                    nav("/");
-                }}>
-                    logout
-                </Button>
             }
         </>
     )

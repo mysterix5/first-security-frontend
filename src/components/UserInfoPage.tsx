@@ -27,7 +27,7 @@ export default function UserInfoPage(props: UserInfoPageProps) {
                         Roles:
                     </Typography>
                     {
-                        props.user.roles.map(r => <Typography>{r}</Typography>
+                        props.user.roles.map(r => <Typography key={r}>{r}</Typography>
                         )
                     }
                     <Button variant={"contained"} onClick={() => deleteUser()}>

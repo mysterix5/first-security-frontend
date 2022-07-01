@@ -1,38 +1,32 @@
-import {Box, Button, CircularProgress, Typography} from "@mui/material";
+import {Box, CircularProgress, Typography} from "@mui/material";
 import {useEffect} from "react";
 import {useLocation, useNavigate} from "react-router-dom";
 import {githubOauthRequest} from "../services/apiServices";
+import {useAuth} from "./AuthProvider";
 
 
 export default function OauthPage() {
     const nav = useNavigate();
     const loc = useLocation();
     const code = loc.search;
+    const {login} = useAuth()
 
     useEffect(()=>{
-
+            githubOauthRequest(code)
+                .then(r => login(r.token))
+                .then(()=>nav("/userpage"))
+                .catch((e)=>{
+                    console.log(e);
+                    }
+                );
         }
-    , [nav, code])
-
-    function requestToGithub(){
-        githubOauthRequest(code)
-            .then(r => {
-                console.log(r);
-                localStorage.setItem("jwt", r.token);
-                return r;
-            })
-            .then(()=>nav("/userpage"));
-    }
+    , [nav, code, login])
 
     return (
         <>
             <Typography variant={"h3"}>
                 Oauth sign in
             </Typography>
-
-            <Button onClick={requestToGithub}>
-                request to Github
-            </Button>
 
             <Box sx={{mt: 5}}>
                 <CircularProgress/>

@@ -9,13 +9,14 @@ export default function RegisterPage(){
 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [passwordAgain, setPasswordAgain] = useState("");
 
     const nav = useNavigate()
 
     const handleSubmit = (event: FormEvent) => {
         event.preventDefault();
-        sendRegister({username, password})
-            .then(r=>nav("/login"));
+        sendRegister({username, password, passwordAgain})
+            .then(()=>nav("/login"));
     }
 
     return (
@@ -27,7 +28,6 @@ export default function RegisterPage(){
                 <Grid container alignItems="center" spacing={2} direction="row">
                     <Grid item>
                         <TextField
-                            id="outlined-basic"
                             label="Username"
                             variant="outlined"
                             size="small"
@@ -43,7 +43,6 @@ export default function RegisterPage(){
                     </Grid>
                     <Grid item>
                         <TextField
-                            id="outlined-basic"
                             label="Password"
                             variant="outlined"
                             size="small"
@@ -57,7 +56,21 @@ export default function RegisterPage(){
                             onChange={event => setPassword(event.target.value)}
                         />
                     </Grid>
-
+                    <Grid item>
+                        <TextField
+                            label="Password again"
+                            variant="outlined"
+                            size="small"
+                            InputProps={{
+                                startAdornment: (
+                                    <InputAdornment position="start">
+                                        <Key/>
+                                    </InputAdornment>
+                                ),
+                            }}
+                            onChange={event => setPasswordAgain(event.target.value)}
+                        />
+                    </Grid>
                     <Grid item>
                         <Button
                             type="submit"
@@ -69,10 +82,6 @@ export default function RegisterPage(){
                     </Grid>
                 </Grid>
             </Box>
-
-            <Button variant={"contained"} onClick={()=>nav("/")}>
-                Back to main page
-            </Button>
         </>
     )
 }

@@ -1,8 +1,8 @@
 import axios, {AxiosResponse} from "axios";
-import {LoginResponse, MyUser, UserInfo} from "./model";
+import {LoginResponse, MyUser, RegisterUser, UserInfo} from "./model";
 
 
-export function sendRegister(user: MyUser) {
+export function sendRegister(user: RegisterUser) {
     return axios.post("/api/user", user)
         .then(r => r.data);
 }

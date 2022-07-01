@@ -1,14 +1,24 @@
-import {Button, Grid, Typography } from "@mui/material";
+import {Grid, Typography } from "@mui/material";
 import {useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getAllUsers } from "../services/apiServices";
 import { UserInfo } from "../services/model";
 import UserInfoPage from "./UserInfoPage";
+import {useAuth} from "../user-management/AuthProvider";
 
 
 export default function AdminPage(){
     const [users, setUsers] = useState<UserInfo[]>()
+
+    const {roles} = useAuth();
+
     const nav = useNavigate();
+
+    useEffect( () => {
+            if (!roles.includes("admin")) nav("/")
+        }
+        , [roles, nav])
+
 
     useEffect(()=>{
         loadAllUsers();
@@ -21,7 +31,7 @@ export default function AdminPage(){
 
     return (
         <>
-            <Typography variant={"h1"} gutterBottom>
+            <Typography variant={"h3"} gutterBottom>
                 Admin page
             </Typography>
             {
@@ -35,18 +45,6 @@ export default function AdminPage(){
                     <Typography>
                         You need admin rights to see this page
                     </Typography>
-            }
-            <Button variant={"contained"} onClick={() => nav("/")}>
-                Back to main page
-            </Button>
-            {
-                localStorage.getItem("jwt") &&
-                <Button variant={"contained"} onClick={() => {
-                    localStorage.clear();
-                    nav("/");
-                }}>
-                    logout
-                </Button>
             }
         </>
     )
