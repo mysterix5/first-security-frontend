@@ -5,11 +5,8 @@ import LoginPage from "./user-management/LoginPage";
 import MainPage from "./components/MainPage";
 import RegisterPage from "./user-management/RegisterPage";
 import UserPage from './components/UserPage';
-import {Button} from '@mui/material';
-import {
-    useState
-} from "../../../../../../../Applications/IntelliJ IDEA.app/Contents/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external/react";
 import AdminPage from './components/AdminPage';
+import OauthPage from './user-management/OauthPage';
 
 function App() {
 
@@ -22,6 +19,7 @@ function App() {
                     <Route path="/register" element={<RegisterPage/>}/>
                     <Route path="/userpage" element={<UserPage/>}/>
                     <Route path="/adminpage" element={<AdminPage/>}/>
+                    <Route path="/oauth" element={<OauthPage/>}/>
                 </Routes>
             </BrowserRouter>
         </div>

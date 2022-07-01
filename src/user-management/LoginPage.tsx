@@ -1,9 +1,8 @@
 import { AccountCircle, Key } from "@mui/icons-material";
-import {Box, Button, Grid, InputAdornment, TextField, Typography} from "@mui/material";
+import {Box, Button, Grid, InputAdornment, Link, TextField, Typography} from "@mui/material";
 import {FormEvent, useState } from "react";
 import {useNavigate} from "react-router-dom";
 import { sendLogin } from "../services/apiServices";
-
 
 export default function LoginPage() {
 
@@ -26,12 +25,12 @@ export default function LoginPage() {
 
     return (
         <>
-            <Typography variant={"h1"} gutterBottom>
+            <Typography variant={"h3"} gutterBottom>
                 Login page
             </Typography>
-            <Box component={"form"} onSubmit={handleSubmit}>
-                <Grid container alignItems="center" spacing={2} direction="row">
-                    <Grid item>
+            <Box component={"form"} onSubmit={handleSubmit} sx={{mt:7}}>
+                <Grid container alignItems="center" spacing={2}>
+                    <Grid item xs={12} sm={4}>
                         <TextField
                             id="outlined-basic"
                             label="Username"
@@ -47,7 +46,7 @@ export default function LoginPage() {
                             onChange={event => setUsername(event.target.value)}
                         />
                     </Grid>
-                    <Grid item>
+                    <Grid item xs={12} sm={4}>
                         <TextField
                             id="outlined-basic"
                             label="Password"
@@ -64,7 +63,7 @@ export default function LoginPage() {
                         />
                     </Grid>
 
-                    <Grid item>
+                    <Grid item xs={12} sm={4}>
                         <Button
                             type="submit"
                             variant="contained"
@@ -75,6 +74,14 @@ export default function LoginPage() {
                     </Grid>
                 </Grid>
             </Box>
+            <Link href={"https://github.com/login/oauth/authorize?client_id=36f80ad5d6db74b4b0d3"}>
+            <Box component="img"
+                 alt="Github Logo"
+                 src="GitHub-Mark-64px.png"
+                 sx={{m:3}}
+            />
+            </Link>
+            <div/>
             <Button variant={"contained"} onClick={() => nav("/")}>
                 Back to main page
             </Button>

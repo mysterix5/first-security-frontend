@@ -38,3 +38,8 @@ export function deleteUserByUsername(name: string) {
         }
     });
 }
+
+export function githubOauthRequest(code: string) {
+    return axios.get("/api/oauth" + code)
+        .then((response: AxiosResponse<LoginResponse>)=>response.data);
+}
