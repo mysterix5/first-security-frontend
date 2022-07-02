@@ -77,7 +77,7 @@ export default function LoginPage() {
                     </Grid>
                 </Grid>
             </Box>
-            <Link href={"https://github.com/login/oauth/authorize?client_id=36f80ad5d6db74b4b0d3"}>
+            <Link href={`https://github.com/login/oauth/authorize?client_id=${process.env.REACT_APP_GITHUB_OAUTH_CLIENT_ID}`}>
                 <Box component="img"
                      alt="Github Logo"
                      src="GitHub-Mark-64px.png"
