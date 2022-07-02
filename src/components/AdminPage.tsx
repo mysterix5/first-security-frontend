@@ -15,7 +15,7 @@ export default function AdminPage(){
     const nav = useNavigate();
 
     useEffect( () => {
-            if (!roles.includes("admin")) nav("/")
+            // if (!roles.includes("admin")) nav("/")
         }
         , [roles, nav])
 
